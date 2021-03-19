@@ -6,10 +6,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.36.3
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009 - 2021, Website Baker Org. e.V.
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -171,6 +171,8 @@ if(is_array($email_fromname_field)&&!empty($email_fromname_field)){
         $curr_email_fromname = $fetch_settings['email_fromname'];
         if(substr($curr_email_fromname, 0, 5) == 'field') {
             $curr_email_fromname = explode (",", $curr_email_fromname);
+        } else {
+            $curr_email_fromname = array ($curr_email_fromname);
         }
     }
     // now we have an array which contains the previous fromname fields

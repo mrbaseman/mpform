@@ -6,10 +6,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.36.3
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009 - 2021, Website Baker Org. e.V.
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -22,6 +22,18 @@ if (!defined('WB_PATH')){
 }
 
 require_once(dirname(__FILE__).'/constants.php');
+
+// a recursive stripslashes function
+if (!function_exists('mpform_stripslashes_deep')) {
+    function mpform_stripslashes_deep($value) {
+        $value = is_array($value) ?
+                    array_map('mpform_stripslashes_deep', $value) :
+                    stripslashes($value);
+
+        return $value;
+    }
+}
+
 
 // Function for generating an options for a select field
 if (!function_exists('make_option')) {
@@ -82,6 +94,7 @@ if (!function_exists('make_checkbox')) {
         $label_i = urlencode($option) . $field_id;
         $bad = array("%", "+");
         $label_id = 'wb_'.str_replace($bad, "", $label_i);
+        if(!is_array($value)) $value = array($value);
         if (in_array($v, $value) or ($isnew and $def > 0)) {
             $option = '<input '
                . ' class="'.$sErrClass.'checkbox"'
@@ -429,7 +442,9 @@ if (!function_exists('paint_form')) {
                                 array("[[", "]]"),
                                 array("&#91;&#91;", "&#93;&#93;"),
                                 htmlspecialchars(
-                                    stripslashes($admin->get_get('field'.$iFID)),
+                                    mpform_stripslashes_deep(
+                                        $admin->get_get('field'.$iFID)
+                                    ),
                                     ENT_QUOTES
                                 )
                             );

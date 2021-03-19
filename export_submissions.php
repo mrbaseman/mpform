@@ -6,10 +6,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.36.3
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009 - 2021, Website Baker Org. e.V.
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -92,6 +92,85 @@ if($database->is_error()) {
     exit;
 }
 
+
+
+$submission_ids='';
+if(isset($_POST['manage_submissions_all'])){
+    $submission_ids='ALL';
+} else {
+    if (isset($_POST['manage_submissions']) && is_array($_POST['manage_submissions'])){
+       $submission_ids=$_POST['manage_submissions'];
+    }
+}
+
+
+if(isset($_POST['delete'])){
+    $admin->print_header();
+    foreach ($_POST['manage_submissions'] as $sid) {
+        $submission_id=intval($sid);
+        // find out section_id
+        $res  = $database->query("SELECT "
+                . "`section_id` FROM `".TP_MPFORM."submissions`"
+                . " WHERE `submission_id` = '$submission_id'"
+                );
+        $rec = $res->fetchRow();
+        $section_id = $rec['section_id'];
+
+        // Delete row
+        $database->query(
+            "DELETE FROM ".TP_MPFORM."submissions"
+                . " WHERE submission_id = '$submission_id'"
+        );
+
+        // Check if there is a db error, otherwise say successful
+        if($database->is_error()) {
+            $admin->print_error($database->get_error(),
+                ADMIN_URL.'/pages/modify.php?page_id='.$page_id);
+            $admin->print_footer();
+            exit;
+        } else {
+
+
+            // find results table
+            $ts = $database->query("SELECT "
+                . "`tbl_suffix` FROM `".TP_MPFORM."settings` "
+                . "WHERE `section_id` = '".$section_id."'"
+                );
+
+            $setting = $ts->fetchRow();
+            $suffix = $setting['tbl_suffix'];
+            if ($suffix != "DISABLED"){
+
+                $results = TP_MPFORM."results_" . $suffix;
+
+                // Check whether results table contains submission_id
+                $res = $database->query("SHOW COLUMNS"
+                    . " FROM `$results` "
+                    . " LIKE 'submission_id'"
+                    );
+                if ($res->numRows() > 0 ) {
+                    $database->query(
+                        "DELETE FROM `$results` "
+                            . " WHERE submission_id = '$submission_id'"
+                    );
+                }
+
+                if($database->is_error()) {
+                    $admin->print_error($database->get_error(),
+                        ADMIN_URL.'/pages/modify.php?page_id='.$page_id);
+                    $admin->print_footer();
+                    exit;
+                }
+            }
+        }
+    }
+    $admin->print_success($TEXT['SUCCESS'],
+        ADMIN_URL.'/pages/modify.php?page_id='.$page_id);
+    $admin->print_footer();
+    exit;
+}
+
+
 $fields = array();
 while ($row = $res->fetchRow()) {
         $fields['field'.$row['field_id']] = array(
@@ -158,20 +237,14 @@ $lines[] = '"'.join('","', $column_names).'"';
 
 
 // print rest of file:
-while ($r=$q->fetchRow()) {
+while ($r=$q->fetchRow(MYSQLI_ASSOC)) {
     $line="";
-    // print first data row:
-    $i = 0;
-    foreach ($r as $k) {
-        $i++;
-        if ($i > 1) {
-            if ($i % 2 == 0) {
-                if($line!="") $line .= ",";
-                $line .= '"'.preg_replace(array('/[\r\n]/','/"/'), array(' ','""'), $k).'"';
-            }
-        }
+    foreach ($r as $k => $v) {
+       if($line!="") $line .= ",";
+       $line .= '"'.preg_replace(array('/[\r\n]/','/"/'), array(' ','""'), $v).'"';
     }
-    $lines[]=$line;
+    if(($submission_ids === 'ALL') || (in_array($r["submission_id"],$submission_ids)))
+        $lines[]=$line;
 }
 
 

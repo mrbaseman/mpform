@@ -102,12 +102,16 @@
     <!-- END field_block -->
 </table>
 <h2>{TEXT_HEADING_S}</h2>
-<form action="{WB_URL}/modules/{MODULE_DIR}/export_submissions.php" method="post">
+<form action="{WB_URL}/modules/{MODULE_DIR}/export_submissions.php" method="post" name="modify_{SECTION_ID}">
                 <input type="hidden" name="section_id" value="{SECTION_ID}" />
                 <input type="hidden" name="page_id" value="{PAGE_ID}" />
                 {FTAN}
-                <button class="mod_mpform_button" type="submit"><img src="{WB_URL}/modules/{MODULE_DIR}/images/export.png" alt="" />{TXT_EXPORT_SUBMISSIONS}</button>
-            </form>
+                <button class="mod_mpform_button" type="submit" name="export" value="{SECTION_ID}"><img src="{WB_URL}/modules/{MODULE_DIR}/images/export.png" alt="" />{TXT_EXPORT_SUBMISSIONS}</button>
+
+<input type="checkbox" name="manage_submissions_all" id="{SECTION_ID}_all" value="all" checked onchange='javascript: var boxes = document.forms["modify_{SECTION_ID}"].elements[ "manage_submissions[]" ]; for (var i=0, len=boxes.length; i<len; i++) { boxes[i].checked = this.checked;}' /> <label for="{SECTION_ID}_all">{TXT_ALL}</label>
+
+<button class="mod_mpform_button" type="submit" onclick='return confirm("{TXT_ARE_YOU_SURE}")' name="delete" value="{SECTION_ID}"><img src="{WB_URL}/modules/{MODULE_DIR}/images/delete.png" alt="" />{TEXT_DELETE}</button>
+
 <div style="float:right; border:1px solid transparent;height: 20px!important;">
     <div id="{MODULE_DIR}Submissions">&nbsp;</div>
 </div>
@@ -120,7 +124,8 @@
                 </a>
             </td>
             <td><small>{TEXT_SUBMISSION_ID}</small>: {field_submission_id}</td>
-            <td align="right"><i>{TEXT_SUBMITTED}: {field_submission_when}</i></td>
+            <td><input type="checkbox" name="manage_submissions[]" value="{field_submission_id}" checked onchange='javascript:document.getElementById("{SECTION_ID}_all").checked &= this.checked' /></td>
+             <td align="right"><i>{TEXT_SUBMITTED}: {field_submission_when}</i></td>
             <td align="right" class="delete_submission">
                 <a href="{MODULE_URL}/delete_submission.php?page_id={PAGE_ID}&amp;section_id={SECTION_ID}&amp;submission_id={submissionIDKEY}" title="{TEXT_DELETE}">
                     <img id="del_{field_submission_id}" src="{MODULE_URL}/images/delete.png" rel="{SECTION_ID}" border="0" alt="[x]" />
@@ -130,6 +135,7 @@
         </tr>
     <!-- END submission_block -->
 </table>
+</form>
 </div>
 
 <script type="text/javascript">

@@ -6,10 +6,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.36.3
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009 - 2021, Website Baker Org. e.V.
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -75,6 +75,7 @@ $tpl->set_var(
         'TEXT_HEADING_S'     => $TEXT['SUBMISSIONS'],
         'TEXT_DELETE'        => $TEXT['DELETE'],
         'TEXT_ARE_YOU_SURE'  => str_replace(' ', '%20', $TEXT['ARE_YOU_SURE']),
+        'TXT_ARE_YOU_SURE'   => $TEXT['ARE_YOU_SURE'],
         'TEXT_FIELD'         => $TEXT['FIELD'],
         'TEXT_MOVE_UP'       => $TEXT['MOVE_UP'],
         'TEXT_MOVE_DOWN'     => $TEXT['MOVE_DOWN'],
@@ -87,6 +88,7 @@ $tpl->set_var(
         'TXT_HEADING'        => $module_name,
         'MODULE_DIR'         => $mod_dir,
         'MOD_CANCEL_URL'     => ADMIN_URL,
+        'TXT_ALL'            => $LANG['backend']['TXT_ALL'],
         'TEXT_TYPE'          => $LANG['backend']['TXT_TYP'],
         'TXT_ADV_SETTINGS'   => $LANG['backend_adv']['adv_settings'],
         'TXT_FIELDS'         => $LANG['backend']['TXT_ADD_FIELD'],
