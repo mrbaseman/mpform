@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36.3
+ * @version             1.3.36.4
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009 - 2021, Website Baker Org. e.V.
  * @url                 https://github.com/mrbaseman/mpform
@@ -130,15 +130,6 @@ if(isset($_POST['delete'])){
             exit;
         } else {
 
-
-            // find results table
-            $ts = $database->query("SELECT "
-                . "`tbl_suffix` FROM `".TP_MPFORM."settings` "
-                . "WHERE `section_id` = '".$section_id."'"
-                );
-
-            $setting = $ts->fetchRow();
-            $suffix = $setting['tbl_suffix'];
             if ($suffix != "DISABLED"){
 
                 $results = TP_MPFORM."results_" . $suffix;
@@ -221,6 +212,11 @@ foreach ($columns as $key => $elem) {
 
 $qs= "SELECT ".join(',', array_keys($column_names))." FROM ".TP_MPFORM."results_$suffix";
 
+$q = $database->query($qs);
+
+$lines = array();
+$lines[] = '"'.join('","', $column_names).'"';
+
 if($database->is_error()) {
     $admin->print_header();
     $admin->print_error($database->get_error(),
@@ -229,25 +225,61 @@ if($database->is_error()) {
     exit;
 }
 
+if ($suffix != "DISABLED"){
 
-$q = $database->query($qs);
+    $results = TP_MPFORM."results_" . $suffix;
 
-$lines = array();
-$lines[] = '"'.join('","', $column_names).'"';
+    // Check whether results table contains submission_id
+    $res = $database->query("SHOW COLUMNS"
+        . " FROM `$results` "
+        . " LIKE 'submission_id'"
+        );
+    if ($res->numRows() < 1 ) {
+        // Insert new column into database
+        $sSQL = "ALTER TABLE `$results`"
+              . " add `submission_id` INT NOT NULL DEFAULT '0' AFTER `referer`";
+        $database->query($sSQL);
 
+        if($database->is_error()) {
+            $admin->print_header();
+            $admin->print_error("could not add submission_id to results table", $sUrlToGo);
+            $admin->print_footer();
+            exit(0);
+        }
+        // if we are supposed to export single entries it won't work (yet), so complain
+        if($submission_ids !== 'ALL'){
+            $admin->print_header();
+            $admin->print_error("could not find submission_id in results table", $sUrlToGo);
+            $admin->print_footer();
+            exit(0);
+        }
+    } // now we have submission_id in the results table, at least for future entries...
 
-// print rest of file:
-while ($r=$q->fetchRow(MYSQLI_ASSOC)) {
-    $line="";
-    foreach ($r as $k => $v) {
-       if($line!="") $line .= ",";
-       $line .= '"'.preg_replace(array('/[\r\n]/','/"/'), array(' ','""'), $v).'"';
+    // prepare the rest of the file:
+    while ($r=$q->fetchRow(MYSQLI_ASSOC)) {
+        $line="";
+        foreach ($r as $k => $v) {
+           if($line!="") $line .= ",";
+           $line .= '"'.preg_replace(array('/[\r\n]/','/"/'), array(' ','""'), $v).'"';
+        }
+        if(($submission_ids === 'ALL') || (in_array($r["submission_id"],$submission_ids))){
+            $lines[]=$line;
+            if($submission_ids !== 'ALL'){
+                unset($submission_ids[array_search($r["submission_id"],$submission_ids)]);
+            }
+        }
     }
-    if(($submission_ids === 'ALL') || (in_array($r["submission_id"],$submission_ids)))
-        $lines[]=$line;
+
+
+    header("Content-Type: text/plain");
+    header("Content-Disposition: attachment; filename=results_$section_id.csv");
+    foreach ($lines as $l) echo "$l;\r\n";
+    if(($submission_ids !== 'ALL') && is_array($submission_ids) && (!empty($submission_ids))){
+        foreach ($submission_ids as $l) echo "#could not find submission_id $l;\r\n";
+    }
+} else {
+    $admin->print_header();
+    $admin->print_error("results table is disabled - nothing to export", $sUrlToGo);
+    $admin->print_footer();
+    exit(0);
 }
-
-
-header("Content-Type: text/plain");
-header("Content-Disposition: attachment; filename=results_$section_id.csv");
-foreach ($lines as $l) echo "$l;\r\n";

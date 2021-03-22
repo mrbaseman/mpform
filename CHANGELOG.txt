@@ -5,13 +5,14 @@ MODULE VERSION HISTORY
 ======================
 
 ------------------------------------------------------------------------------------------------------------------------
-        *** 1.3.36.3 (Martin Hecht: 19-Mar-2021)
+        *** 1.3.36.4 (Martin Hecht: 22-Mar-2021)
         fix two array to string conversions in paintform
         make export of sumissions more stable with respect to field indices
         suppress warning when saving settings with email from name settings
         fix warnings about internal quoting function
         support export of selected submissions
         support deleting selected submissions
+        make export more stable with old results table data structure
 
         *** 1.3.36 (Martin Hecht: 29-Dec-2020)
         allow email receipients to be a required field

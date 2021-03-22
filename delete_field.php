@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36.3
+ * @version             1.3.36.4
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009 - 2021, Website Baker Org. e.V.
  * @url                 https://github.com/mrbaseman/mpform
