@@ -6,9 +6,9 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36.4
+ * @version             1.3.37
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2021, Website Baker Org. e.V.
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
@@ -259,7 +259,7 @@ if ($suffix != "DISABLED"){
     while ($r=$q->fetchRow(MYSQLI_ASSOC)) {
         $line="";
         foreach ($r as $k => $v) {
-           if($line!="") $line .= ",";
+           if($line!="") $line .= MPFORM_CSV_SEPATATOR;
            $line .= '"'.preg_replace(array('/[\r\n]/','/"/'), array(' ','""'), $v).'"';
         }
         if(($submission_ids === 'ALL') || (in_array($r["submission_id"],$submission_ids))){

@@ -6,9 +6,9 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36.4
+ * @version             1.3.37
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2021, Website Baker Org. e.V.
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
@@ -20,7 +20,7 @@
 $module_directory   = 'mpform';
 $module_name        = 'mpForm';
 $module_function    = 'page';
-$module_version     = '1.3.36.4';
+$module_version     = '1.3.37';
 $module_platform    = '2.8.x';
 $module_status      = 'stable';
 $module_author      = 'Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others';

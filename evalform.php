@@ -6,9 +6,9 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36.4
+ * @version             1.3.37
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2021, Website Baker Org. e.V.
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
@@ -1242,18 +1242,28 @@ if (!function_exists('eval_form')) {
                                                      . '`'
                                                      . " = ''";
                                     }
-
                                     // Check whether results table contains submission_id
                                     $res = $database->query("SHOW COLUMNS"
                                         . " FROM ".TP_MPFORM."results_$suffix"
                                         . " LIKE 'submission_id'"
                                         );
-                                    if ($res->numRows() > 0 ) {
-                                        $field_empty .= ', `submission_id`'
-                                                     . " = '"
-                                                     . $submission_id
-                                                     . "'";
+                                    if ($res->numRows() < 1 ) {
+                                        // Insert new column into database
+                                        $sSQL = "ALTER TABLE ".TP_MPFORM."results_$suffix"
+                                              . " add `submission_id` INT NOT NULL DEFAULT '0' AFTER `referer`";
+                                        $database->query($sSQL);
+                                        if($database->is_error()) {
+                                            echo $TEXT['DATABASE']
+                                              . " "
+                                              . $qs."<br />"
+                                              . $database->get_error();
+                                            $success = false;
+                                        }
                                     }
+                                    $field_empty .= ', `submission_id`'
+                                                 . " = '"
+                                                 . $submission_id
+                                                 . "'";
                                     $qs = "INSERT INTO ".TP_MPFORM."results_$suffix"
                                         . " SET "
                                         . "`session_id` = '$us', "

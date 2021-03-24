@@ -5,7 +5,7 @@ MODULE VERSION HISTORY
 ======================
 
 ------------------------------------------------------------------------------------------------------------------------
-        *** 1.3.36.4 (Martin Hecht: 22-Mar-2021)
+        *** 1.3.37 (Martin Hecht: 24-Mar-2021)
         fix two array to string conversions in paintform
         make export of sumissions more stable with respect to field indices
         suppress warning when saving settings with email from name settings
@@ -13,6 +13,8 @@ MODULE VERSION HISTORY
         support export of selected submissions
         support deleting selected submissions
         make export more stable with old results table data structure
+        insert submission_id in results table during import and when submitting
+        add possibility to change separator for csv file in export
 
         *** 1.3.36 (Martin Hecht: 29-Dec-2020)
         allow email receipients to be a required field
