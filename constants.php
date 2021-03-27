@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.37
+ * @version             1.3.37.2
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -232,5 +232,10 @@ if(!defined('MPFORM_SKIP_ASP')){
 
 if(!defined('MPFORM_CSV_SEPATATOR')){
     define('MPFORM_CSV_SEPATATOR',',');
+}
+
+
+if(!defined('MPFORM_CSV_LINE_SEPATATOR')){
+    define('MPFORM_CSV_LINE_SEPATATOR',";\r\n");
 }
 

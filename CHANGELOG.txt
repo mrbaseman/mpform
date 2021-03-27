@@ -5,6 +5,11 @@ MODULE VERSION HISTORY
 ======================
 
 ------------------------------------------------------------------------------------------------------------------------
+        *** 1.3.37.2 (Martin Hecht: 27-Mar-2021)
+        do not add IP address by default
+        fix export with different separators than comma
+        allow to specify line separator (including line ending) for csv export
+
         *** 1.3.37 (Martin Hecht: 24-Mar-2021)
         fix two array to string conversions in paintform
         make export of sumissions more stable with respect to field indices

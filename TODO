@@ -3,10 +3,16 @@
  * todo list for upcoming releases:
  * ================================
  *
+ * - make mpform use a responsive design by default, make it possible
+ *   to have several fields next to each other similar to miniform
+ *
  * - make workflow more flexible. Right now, saving results in various tables
  *   and sending emails happens in a fixed order. Moving these steps around
  *   like it is possible to drag&drop fields would be nice, but it needs a
  *   huge redesign of evalform, by far the largest file of the module :-/
+ *
+ * - get rid of phplib template engine (and maybe switch to plain php
+ *   templates, like nwi uses)
  *
  * (If you find bugs or if you would like to propose a new feature which you
  * consider useful, do not hesitate to contact me)

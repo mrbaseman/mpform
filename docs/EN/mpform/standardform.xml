@@ -2,7 +2,7 @@
 <export_section>
         <module>
                 <name>mpform</name>
-                <version>1.3.37</version>
+                <version>1.3.37.2</version>
         </module>
         <export_section_table>
                 <tablename>mod_mpform_fields</tablename>
@@ -159,20 +159,18 @@
                         <export_section_field><fieldn>email_fromname</fieldn><fieldv><![CDATA[]]></fieldv></export_section_field>
                         <export_section_field><fieldn>email_subject</fieldn><fieldv><![CDATA[Results from form on website...]]></fieldv></export_section_field>
                         <export_section_field><fieldn>email_text</fieldn><fieldv><![CDATA[The following data was submitted:<br />{DATA}
-<br />Referer page: {REFERER}<br />IP address: {IP}]]></fieldv></export_section_field>
+]]></fieldv></export_section_field>
                         <export_section_field><fieldn>email_css</fieldn><fieldv><![CDATA[]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_page</fieldn><fieldv><![CDATA[none]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_text</fieldn><fieldv><![CDATA[<div class=\"mpform_results\">Thank you for submitting your data. We received the following data:<br />{DATA}
-<br />Referer page: {REFERER}<br />Your IP address: {IP}</div>]]></fieldv></export_section_field>
+<br /></div>]]></fieldv></export_section_field>
                         <export_section_field><fieldn>submissions_text</fieldn><fieldv><![CDATA[{DATA}
-Referer page: {REFERER}
-IP address: {IP}
 Date: {DATE}]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_email_to</fieldn><fieldv><![CDATA[]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_email_from</fieldn><fieldv><![CDATA[SERVER_EMAIL]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_email_fromname</fieldn><fieldv><![CDATA[]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_email_text</fieldn><fieldv><![CDATA[Thank you for submitting your data. We received the following data:&lt;br /&gt;{DATA}
-&lt;br /&gt;Referer page: {REFERER}&lt;br /&gt;Your IP address: {IP}]]></fieldv></export_section_field>
+&lt;br /&gt;]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_email_css</fieldn><fieldv><![CDATA[]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_email_subject</fieldn><fieldv><![CDATA[You have submitted a form]]></fieldv></export_section_field>
                         <export_section_field><fieldn>stored_submissions</fieldn><fieldv><![CDATA[1000]]></fieldv></export_section_field>

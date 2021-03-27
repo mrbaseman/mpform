@@ -2,7 +2,7 @@
 <export_section>
         <module>
                 <name>mpform</name>
-                <version>1.3.37</version>
+                <version>1.3.37.2</version>
         </module>
         <export_section_table>
                 <tablename>mod_mpform_fields</tablename>
@@ -155,13 +155,11 @@
                         <export_section_field><fieldn>email_fromname</fieldn><fieldv><![CDATA[]]></fieldv></export_section_field>
                         <export_section_field><fieldn>email_subject</fieldn><fieldv><![CDATA[Formularereintragung von der Website...]]></fieldv></export_section_field>
                         <export_section_field><fieldn>email_text</fieldn><fieldv><![CDATA[Folgende Daten wurden &uuml;bermittelt:<br />{DATA}
-<br />Verweisseite: {REFERER}<br />IP-Adresse: {IP}<br />Datum: {DATE}]]></fieldv></export_section_field>
+<br />Datum: {DATE}]]></fieldv></export_section_field>
                         <export_section_field><fieldn>email_css</fieldn><fieldv><![CDATA[]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_page</fieldn><fieldv><![CDATA[none]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_text</fieldn><fieldv><![CDATA[<div class=\"mpform_results\">Danke f&uuml;r das Ausf&uuml;llen des Formulars. Wir haben folgende Daten erhalten:<br />{DATA}</div>]]></fieldv></export_section_field>
                         <export_section_field><fieldn>submissions_text</fieldn><fieldv><![CDATA[{DATA}
-Verweisseite: {REFERER}
-IP-Adresse: {IP}
 Datum: {DATE}]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_email_to</fieldn><fieldv><![CDATA[]]></fieldv></export_section_field>
                         <export_section_field><fieldn>success_email_from</fieldn><fieldv><![CDATA[SERVER_EMAIL]]></fieldv></export_section_field>

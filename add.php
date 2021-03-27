@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.37
+ * @version             1.3.37.2
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -66,14 +66,14 @@ $success_text
     . '<br />'
     . '</div>';
 $submissions_text = '{DATA}'."\n"
-    . 'Referer page: {REFERER}'."\n"
-    . 'IP address: {IP}'."\n"
+//    . 'Referer page: {REFERER}'."\n"
+//    . 'IP address: {IP}'."\n"
     . 'Date: {DATE}';
 $email_text = 'The following data was submitted:<br />{DATA}'
     . '<br />'
     . 'Referer page: {REFERER}'
-    . '<br />'
-    . 'IP address: {IP}';
+    . '<br />';
+//    . 'IP address: {IP}';
 $email_css = '';
 $success_email_to = '';
 $success_email_from = 'SERVER_EMAIL';
