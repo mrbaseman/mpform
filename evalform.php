@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.37.2
+ * @version             1.3.37.3
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -124,7 +124,7 @@ if (!function_exists('mpform_mailx')) {
 
         $fromaddress = preg_replace('/[\r\n]/', '', $fromaddress);
         $subject = preg_replace('/[\r\n]/', '', $subject);
-        $htmlmessage = preg_replace('/[\r\n]/', "<br />\n", $message);
+        $htmlmessage = preg_replace('#(\\\r|\\\r\\\n|\\\n)#', "<br />\n", $message);
         $plaintext = preg_replace(",<br />,", "\r\n", $message);
         $plaintext = preg_replace(",</h.>,", "\r\n", $plaintext);
         $plaintext = htmlspecialchars_decode(preg_replace(",<[^>]+>,", " ", $plaintext), ENT_NOQUOTES);

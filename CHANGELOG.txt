@@ -5,10 +5,11 @@ MODULE VERSION HISTORY
 ======================
 
 ------------------------------------------------------------------------------------------------------------------------
-        *** 1.3.37.2 (Martin Hecht: 27-Mar-2021)
+        *** 1.3.37.3 (Martin Hecht: 07-May-2021)
         do not add IP address by default
         fix export with different separators than comma
         allow to specify line separator (including line ending) for csv export
+        correctly replace line endings in htmlmessage, thanks to florian
 
         *** 1.3.37 (Martin Hecht: 24-Mar-2021)
         fix two array to string conversions in paintform
