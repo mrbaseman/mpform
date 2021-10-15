@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.37.3
+ * @version             1.3.38
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -107,7 +107,11 @@ if (!function_exists('NewWbMailer')) {
         if (!class_exists('WbMailer', false)) {
             // its wb < 2.8.3 sp4(?)
             if (!class_exists('wbmailer', false)) {
-                include_once(WB_PATH.'/include/phpmailer/class.phpmailer.php');
+                if(file_exists(WB_PATH.'/include/phpmailer/phpmailer/src/PHPMailer.php')){
+                        include_once(WB_PATH.'/include/phpmailer/phpmailer/src/PHPMailer.php');
+                } else {
+                        include_once(WB_PATH.'/include/phpmailer/class.phpmailer.php');
+                }
                 include_once(WB_PATH.'/framework/class.wbmailer.php');
             }
             return new wbmailer();
