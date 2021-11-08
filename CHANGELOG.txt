@@ -5,6 +5,12 @@ MODULE VERSION HISTORY
 ======================
 
 ------------------------------------------------------------------------------------------------------------------------
+        *** 1.3.39 (Martin Hecht: 08-Nov-2021)
+        trim surrounding spaces from email address field (request by Maarten)
+        rearrange processing of email address field
+        fix droplet injection in case email filter is active
+        fix style issue with Nexus Reponsive template (thanks to berny)
+
         *** 1.3.38 (Martin Hecht: 15-Oct-2021)
         support new phpmailer location in WB 2.13
         do not add IP address by default

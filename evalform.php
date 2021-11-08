@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.38
+ * @version             1.3.39
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -516,6 +516,7 @@ if (!function_exists('eval_form')) {
                     if ((!empty($_POST['field'.$field_id]))
                     or  ($admin->get_post('field'.$field_id) == "0")) { // added Apr 2009
                         $post_field = $_POST['field'.$field_id];
+                        $field_value = $post_field;
 
                         // copy user entered data to $_SESSION in case form must be
                         // reviewed (for instance because of missing required values)
@@ -557,7 +558,6 @@ if (!function_exists('eval_form')) {
                         // and the recipient would see (dot), (at) etc.
 
                         if ($filter_settings['email_filter']) {
-                            $field_value = $post_field;
                             $field_value
                                 = str_replace(
                                     $filter_settings['at_replacement'],
@@ -603,6 +603,8 @@ if (!function_exists('eval_form')) {
 
                         $aReplacements['{CLASSES}'] = $field_classes;
                         if($field['type'] == 'email'){
+                            $post_field = trim($post_field);
+                            $field_value = trim($field_value);
                             if ($admin->validate_email($post_field) == false) {
                                 $err_txt[$field_id] = $MESSAGE['USERS_INVALID_EMAIL'];
                                 $fer[] = $field_id;
@@ -746,9 +748,14 @@ if (!function_exists('eval_form')) {
                             $curr_field = "'";
                             $lines = '';
                             foreach ($post_field as $k => $v) {
+                                // no injections, please
                                 $field_value
-                                    = htmlspecialchars(
-                                        $admin->add_slashes($v), ENT_QUOTES
+                                    = str_replace(
+                                        array("[[", "]]"),
+                                        array("&#91;&#91;", "&#93;&#93;"),
+                                        htmlspecialchars(
+                                            $admin->add_slashes($v), ENT_QUOTES
+                                        )
                                     );
                                 $curr_field .= mpform_escape_string($field_value) . ", ";
                                 $lines .= mpform_escape_string($field_value) . "<br />";
