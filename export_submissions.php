@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.39
+ * @version             1.3.39.1
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -274,9 +274,9 @@ if ($suffix != "DISABLED"){
 
     header("Content-Type: text/plain");
     header("Content-Disposition: attachment; filename=results_$section_id.csv");
-    foreach ($lines as $l) echo $l.MPFORM_CSV_LINE_SEPERATOR;
+    foreach ($lines as $l) echo $l.MPFORM_CSV_LINE_SEPARATOR;
     if(($submission_ids !== 'ALL') && is_array($submission_ids) && (!empty($submission_ids))){
-        foreach ($submission_ids as $l) echo "#could not find submission_id ".$l.MPFORM_CSV_LINE_SEPERATOR;
+        foreach ($submission_ids as $l) echo "#could not find submission_id ".$l.MPFORM_CSV_LINE_SEPARATOR;
     }
     exit(0);
 } else {
