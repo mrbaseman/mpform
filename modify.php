@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.39
+ * @version             1.3.39.2
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -257,6 +257,20 @@ if($query_submissions->numRows() > 0) {
     $pos = 0;
     while($submission = $query_submissions->fetchRow()) {
         $pos++;
+
+        // Get the user details of whoever did this submission
+        $query_user
+            = "SELECT username,display_name"
+               . " FROM `".TABLE_PREFIX."users`"
+               . " WHERE `user_id` = '".$submission['submitted_by']."'";
+        $get_user = $database->query($query_user);
+        if($get_user->numRows() != 0) {
+            $user = $get_user->fetchRow();
+        } else {
+            $user['display_name'] = 'Unknown';
+            $user['username'] = 'unknown';
+        }
+
         $tpl->set_var(
             array(
                 'SUBMISSION_ID'          => (method_exists( $admin, 'getIDKEY' )
@@ -271,7 +285,10 @@ if($query_submissions->numRows() > 0) {
                                             ? $admin->getIDKEY($submission['submission_id'])
                                             : $submission['submission_id'],
                 'field_submission_when'  => date(TIME_FORMAT.', '.DATE_FORMAT,
-                                                 $submission['submitted_when']-DEFAULT_TIMEZONE+TIMEZONE),
+                                                 $submission['submitted_when']-DEFAULT_TIMEZONE+TIMEZONE)
+                                                . " " . $TEXT['FROM'] . " "
+                                                . $user['display_name'] . ' (' . $user['username'] . ')'
+
             )
         );
         $tpl->parse('submission_loop', 'submission_block', true);

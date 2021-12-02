@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.39
+ * @version             1.3.39.2
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -997,7 +997,11 @@ if (!function_exists('eval_form')) {
             $email_text = str_replace("{FIELD".$mpfid."}", $mpfval, $email_text);
             $success_email_text = str_replace("{FIELD".$mpfid."}", $mpfval, $success_email_text);
         }
-        $mpform_fields = $tmp_mpform_fields;
+        $mpform_fields = str_replace(
+            array('{DATA}', '{REFERER}', '{IP}', '{DATE}', '{USER}', '{EMAIL}'),
+            array($html_data_site, $_SESSION['href'], $ip, $now, $wb_user, $success_email_to),
+            $tmp_mpform_fields
+        );
         // Check if the user forgot to enter values into all the required fields
         if(!empty($fer)) {
             // paint form again:
