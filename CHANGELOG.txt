@@ -5,6 +5,11 @@ MODULE VERSION HISTORY
 ======================
 
 ------------------------------------------------------------------------------------------------------------------------
+        *** 1.3.40 (Martin Hecht: 16-Dec-2021)
+        replace placeholders in values stored in results table (request by ed)
+        show submitting users in submissions table of backend (request by ed)
+        fix constants in export_submissions (thanks to bernd)
+
         *** 1.3.39 (Martin Hecht: 08-Nov-2021)
         trim surrounding spaces from email address field (request by Maarten)
         rearrange processing of email address field
