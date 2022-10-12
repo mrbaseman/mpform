@@ -6,9 +6,9 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.40
+ * @version             1.3.42
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
@@ -126,8 +126,8 @@ foreach ($emails as $recip) {
     if (count($teil) == 1) {           // no name part found
         $ok = true;                    // $admin->validate_email(trim($teil[0]));
     } elseif (count($teil) == 2) {     // with name part
-        $s = explode(">", $teil[1]);   // string with (list of) email address(es)
-        $se = explode(",", $s[0]);     // array  with (list of) email address(es)
+        $s = explode(">", $teil[1] ?? '');   // string with (list of) email address(es)
+        $se = explode(",", $s[0] ?? '');     // array  with (list of) email address(es)
         foreach ($se as $sh) {
             $ok = true;                // $admin->validate_email(trim($sh));
         if (!$ok)                      // check each address
@@ -137,7 +137,7 @@ foreach ($emails as $recip) {
     if ($ok)
     $temp_email_to .= "$recip\n";      // only take valid lines
 }
-$email_to = trim($temp_email_to);
+$email_to = trim($temp_email_to ?? '');
 
 if (!$admin->validate_email($email_from)) {
     $email_from = '';
@@ -149,11 +149,11 @@ if (!$admin->validate_email($success_email_from)) {
     $success_email_from = '';
 }
 
-$email_fromname = htmlspecialchars($email_fromname, ENT_QUOTES);
-$email_subject = htmlspecialchars($email_subject, ENT_QUOTES);
-$success_email_fromname = htmlspecialchars($success_email_fromname, ENT_QUOTES);
-$success_email_subject = htmlspecialchars($success_email_subject, ENT_QUOTES);
-$success_email_text = htmlspecialchars($success_email_text, ENT_QUOTES);
+$email_fromname = htmlspecialchars($email_fromname ?? '', ENT_QUOTES);
+$email_subject = htmlspecialchars($email_subject ?? '', ENT_QUOTES);
+$success_email_fromname = htmlspecialchars($success_email_fromname ?? '', ENT_QUOTES);
+$success_email_subject = htmlspecialchars($success_email_subject ?? '', ENT_QUOTES);
+$success_email_text = htmlspecialchars($success_email_text ?? '', ENT_QUOTES);
 
 // end of data cleaning
 
@@ -170,7 +170,7 @@ if(is_array($email_fromname_field)&&!empty($email_fromname_field)){
         $fetch_settings = $query_settings->fetchRow();
         $curr_email_fromname = $fetch_settings['email_fromname'];
         if(substr($curr_email_fromname, 0, 5) == 'field') {
-            $curr_email_fromname = explode (",", $curr_email_fromname);
+            $curr_email_fromname = explode (",", $curr_email_fromname ?? '');
         } else {
             $curr_email_fromname = array ($curr_email_fromname);
         }

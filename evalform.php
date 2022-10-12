@@ -6,9 +6,9 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.40
+ * @version             1.3.42
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
@@ -75,8 +75,8 @@ if (!function_exists('mpform_upload_one_file')) {
 
         if ($upload->isError($file)) return $file->getMessage();
 
-        if (trim($only_exts)) {
-            $a = explode(",",$only_exts);
+        if (trim($only_exts ?? '')) {
+            $a = explode(",",$only_exts ?? '');
             $file->setValidExtensions($a,'accept');
         } else {
             $a = array('NOT_POSSIBLE_ONE');
@@ -101,8 +101,12 @@ if (!function_exists('NewWbMailer')) {
     function NewWbMailer()
     {
         if (class_exists('Mailer', true)) {
-                // for WBCE > 1.3.3 (?)
+                // for WBCE > 1.3.3
                 return new Mailer();
+        }
+        if(class_exists('App\WBMailer', true)) {
+                // for WB > 2.13.2
+                return new App\WBMailer();
         }
         if (!class_exists('WbMailer', false)) {
             // its wb < 2.8.3 sp4(?)
@@ -170,29 +174,29 @@ if (!function_exists('mpform_mailx')) {
 
 
         // define recipient(s)
-        $emails = explode(",", $toaddress);
+        $emails = explode(",", $toaddress ?? '');
         foreach ($emails as $recip) {
             if(defined('SERVER_EMAIL')) {
                 $recip = str_replace('SERVER_EMAIL', SERVER_EMAIL, $recip);
             } else {
                 $recip = str_replace('SERVER_EMAIL', '', $recip);
             }
-            if (trim($recip) != '') {
-                if (preg_match("/^bcc\:(.*?)\<(.*?)\>$/i",trim($recip),$matches)) { //bcc whith name
-                    $myMail->AddBcc(trim($matches[2]), trim($matches[1]));
+            if (trim($recip ?? '') != '') {
+                if (preg_match("/^bcc\:(.*?)\<(.*?)\>$/i",trim($recip ?? ''),$matches)) { //bcc whith name
+                    $myMail->AddBcc(trim($matches[2] ?? ''), trim($matches[1] ?? ''));
                     continue;
                 }
-                if (preg_match("/^cc\:(.*?)\<(.*?)\>$/i",trim($recip),$matches)) {  //cc whith name
-                    $myMail->AddCc(trim($matches[2]), trim($matches[1]));
+                if (preg_match("/^cc\:(.*?)\<(.*?)\>$/i",trim($recip ?? ''),$matches)) {  //cc whith name
+                    $myMail->AddCc(trim($matches[2] ?? ''), trim($matches[1] ?? ''));
                     continue;
                 }
-                if (preg_match("/^(.*?)\<(.*?)\>$/i",trim($recip),$matches)) {      // address whith name
-                    $myMail->AddAddress(trim($matches[2]), trim($matches[1]));
+                if (preg_match("/^(.*?)\<(.*?)\>$/i",trim($recip ?? ''),$matches)) {      // address whith name
+                    $myMail->AddAddress(trim($matches[2] ?? ''), trim($matches[1] ?? ''));
                     continue;
                 }
-                if (strpos( $recip, "BCC:")===0)   {$myMail->AddBcc(trim(substr($recip, 4)));}  // BCC:
-                elseif (strpos($recip, "CC:")===0) {$myMail->AddCc(trim(substr($recip, 3)));}   // CC:
-                else                               {$myMail->AddAddress(trim($recip)); }        // TO:
+                if (strpos( $recip, "BCC:")===0)   {$myMail->AddBcc(trim(substr($recip, 4) ?? ''));}  // BCC:
+                elseif (strpos($recip, "CC:")===0) {$myMail->AddCc(trim(substr($recip, 3) ?? ''));}   // CC:
+                else                               {$myMail->AddAddress(trim($recip) ?? ''); }        // TO:
             }
         }
 
@@ -315,7 +319,7 @@ if (!function_exists('eval_form')) {
             $email_from = $fetch_settings['email_from'];
             if(substr($email_from, 0, 5) == 'field') {
                 // Set the email from field to what the user entered in the specified field
-                $email_from = htmlspecialchars($admin->add_slashes($_POST[$email_from]));
+                $email_from = htmlspecialchars($admin->add_slashes($_POST[$email_from]) ?? '');
             }
             if ($email_from == 'wbu') {
                 $email_from = $admin->get_email();
@@ -334,7 +338,7 @@ if (!function_exists('eval_form')) {
                 // Set the email replyto field to what the user entered in the specified field
                 $email_replyto
                     = htmlspecialchars(
-                        $admin->add_slashes($_POST[$email_replyto])
+                        $admin->add_slashes($_POST[$email_replyto]) ?? ''
                     );
             }
             if ($email_replyto == 'wbu') {
@@ -352,12 +356,12 @@ if (!function_exists('eval_form')) {
             $email_fromname = $fetch_settings['email_fromname'];
             if(substr($email_fromname, 0, 5) == 'field') {
                 // Set the email from field to what the user entered in the specified fields
-                $email_fromname = explode (",", $email_fromname);
+                $email_fromname = explode (",", $email_fromname ?? '');
                 $fromnames = array();
                 foreach($email_fromname as $fromname){
                     $fromnames[]
                         = htmlspecialchars(
-                            $admin->get_post_escaped($fromname),
+                            $admin->get_post_escaped($fromname) ?? '',
                             ENT_QUOTES
                         );
                 }
@@ -372,7 +376,7 @@ if (!function_exists('eval_form')) {
                 // Set the success_email to field to what the user entered in the specified field
                 $success_email_to
                     = htmlspecialchars(
-                        $admin->add_slashes($_POST[$success_email_to])
+                        $admin->add_slashes($_POST[$success_email_to]) ?? ''
                     );
             }
             if ($success_email_to == 'wbu') {
@@ -398,7 +402,7 @@ if (!function_exists('eval_form')) {
                 // Set the email from field to what the user selected in the specified field
                 $success_email_from = $admin->add_slashes($_POST[$success_email_from]);
                 if(is_array($success_email_from))$success_email_from = $success_email_from[0];
-                $success_email_from = htmlspecialchars($success_email_from);
+                $success_email_from = htmlspecialchars($success_email_from ?? '');
             }
             if ($success_email_from == 'wbu') {
                 $success_email_from = $admin->get_email();
@@ -417,7 +421,7 @@ if (!function_exists('eval_form')) {
                 // Set the name from field to what the user selected in the specified field
                 $success_email_fromname = $admin->add_slashes($_POST[$success_email_fromname]);
                 if(is_array($success_email_fromname))$success_email_fromname = $success_email_fromname[0];
-                $success_email_fromname = htmlspecialchars($success_email_fromname);
+                $success_email_fromname = htmlspecialchars($success_email_fromname ?? '');
             }
             if ($success_email_fromname == 'wbu') {
                 $success_email_fromname = $admin->get_display_name();
@@ -534,7 +538,7 @@ if (!function_exists('eval_form')) {
                                     array("[[", "]]"),
                                     array("&#91;&#91;", "&#93;&#93;"),
                                     htmlspecialchars(
-                                        stripslashes($post_field), ENT_QUOTES)
+                                        stripslashes($post_field) ?? '', ENT_QUOTES)
                                     );
                         }
 
@@ -546,7 +550,7 @@ if (!function_exists('eval_form')) {
                                     array("&#91;&#91;", "&#93;&#93;"),
                                     htmlspecialchars(
                                         $admin->get_post_escaped(
-                                            'field'.$field_id), ENT_QUOTES
+                                            'field'.$field_id) ?? '', ENT_QUOTES
                                         )
                                     );
                         }
@@ -579,13 +583,13 @@ if (!function_exists('eval_form')) {
                         $aReplacements['{TEMPLATE}'] = $field['template'];
                         $aReplacements['{TEMPLATE0}']
                             = preg_replace(array("/\n/","/\r/"),'',$field['template']);
-                        $tmp_tpl = explode("\n", $field['template']);
+                        $tmp_tpl = explode("\n", $field['template'] ?? '');
                         for($tpl_idx = 1; $tpl_idx < 10; $tpl_idx++){
                             $aReplacements['{TEMPLATE'.$tpl_idx.'}'] = "";
                         }
                         $tpl_idx=1;
                         foreach ($tmp_tpl as $curr_idx){
-                            $aReplacements['{TEMPLATE'.$tpl_idx.'}'] = trim($curr_idx);
+                            $aReplacements['{TEMPLATE'.$tpl_idx.'}'] = trim($curr_idx ?? '');
                             $tpl_idx++;
                         }
 
@@ -603,8 +607,8 @@ if (!function_exists('eval_form')) {
 
                         $aReplacements['{CLASSES}'] = $field_classes;
                         if($field['type'] == 'email'){
-                            $post_field = trim($post_field);
-                            $field_value = trim($field_value);
+                            $post_field = trim($post_field ?? '');
+                            $field_value = trim($field_value ?? '');
                             if ($admin->validate_email($post_field) == false) {
                                 $err_txt[$field_id] = $MESSAGE['USERS_INVALID_EMAIL'];
                                 $fer[] = $field_id;
@@ -653,7 +657,7 @@ if (!function_exists('eval_form')) {
                                 $err_txt[$field_id] = $LANG['frontend']['select_recip'];
                                 $fer[]=$field_id;
                             }
-                            $recip = htmlspecialchars($post_field[0], ENT_QUOTES);
+                            $recip = htmlspecialchars($post_field[0] ?? '', ENT_QUOTES);
                             $aReplacements['{TITLE}'] =  $field['title'];
                             $aReplacements['{DATA}']  =  $recip;
                             $html_data_user
@@ -742,7 +746,7 @@ if (!function_exists('eval_form')) {
                             }
                             $curr_field
                                 = "'"
-                                . mpform_escape_string(htmlspecialchars($post_field))
+                                . mpform_escape_string(htmlspecialchars($post_field ?? ''))
                                 . "'";
                        } else {
                             $curr_field = "'";
@@ -754,7 +758,7 @@ if (!function_exists('eval_form')) {
                                         array("[[", "]]"),
                                         array("&#91;&#91;", "&#93;&#93;"),
                                         htmlspecialchars(
-                                            $admin->add_slashes($v), ENT_QUOTES
+                                            $admin->add_slashes($v) ?? '', ENT_QUOTES
                                         )
                                     );
                                 $curr_field .= mpform_escape_string($field_value) . ", ";

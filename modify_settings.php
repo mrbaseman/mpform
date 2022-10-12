@@ -6,9 +6,9 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.40
+ * @version             1.3.42
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
@@ -168,7 +168,7 @@ $tpl->set_var(
 
 
 // returns list of email fields from the form
-function give_me_address_list(&$tpl, $curr_value, $java=true, $fname = '', $wbt, $listtype='email'){
+function give_me_address_list(&$tpl, $curr_value, $java = true, $fname = '', $wbt = '', $listtype='email'){
     global $database, $section_id, $TEXT;
     $tpl->set_block('main_block', $fname.'_block' , $fname);
     $rt = false;
@@ -233,7 +233,7 @@ function give_me_address_list(&$tpl, $curr_value, $java=true, $fname = '', $wbt,
 }
 
 // returns list of text fields from the form
-function give_me_name_list(&$tpl, $curr_value, $java=true, $fname = '', $wbt, $listtype='textfield'){
+function give_me_name_list(&$tpl, $curr_value, $java=true, $fname = '', $wbt = '', $listtype='textfield'){
     global $database, $section_id, $TEXT;
     $tpl->set_block('main_block', $fname.'_block' , $fname);
     $rt = false;

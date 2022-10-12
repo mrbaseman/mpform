@@ -6,9 +6,9 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.40
+ * @version             1.3.42
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
@@ -182,7 +182,7 @@ if($num_fields > 0) {
         }
         $multiselect_field='';
         if ($field['type'] == 'select') {
-            $field['extra'] = explode(',',$field['extra']);
+            $field['extra'] = explode(',',$field['extra'] ?? '');
             $multiselect_txt = $TEXT['MULTISELECT'] .': '
                 .(($field['extra'][1] == 'multiple') ? $TEXT['YES'] : $TEXT['NO']);
             $multiselect_img = WB_URL.'/modules/'.$mod_dir.'/images/'

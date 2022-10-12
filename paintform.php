@@ -6,9 +6,9 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.40
+ * @version             1.3.42
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
@@ -47,7 +47,7 @@ if (!function_exists('make_option')) {
     ) {
         $def = strpos($option, MPFORM_IS_DEFAULT);
         ($def > 0) ? $h = substr($option, 0, $def) : $h = $option;
-        $vals=explode($value_option_separator,$h);
+        $vals=explode($value_option_separator,$h ?? '');
         if(count($vals)==1) $vals[1]=$vals[0];
         // start option group if it exists
         if (substr($option, 0, 2) == '[=') {
@@ -81,7 +81,7 @@ if (!function_exists('make_checkbox')) {
     ) {
         $def = strpos($option, MPFORM_IS_DEFAULT);
         ($def > 0) ? $h = substr($option, 0, $def) : $h = $option;
-        $vals=explode($value_option_separator,$h);
+        $vals=explode($value_option_separator,$h ?? '');
         if ($mpform_code=="") {
             $v = $vals[0];
         } else {
@@ -140,7 +140,7 @@ if (!function_exists('make_radio')) {
     ) {
         $def = strpos($option, MPFORM_IS_DEFAULT);
         ($def > 0) ? $h = substr($option, 0, $def) : $h = $option;
-        $vals=explode($value_option_separator,$h);
+        $vals=explode($value_option_separator,$h ?? '');
         if ($mpform_code=="") {
             $v = $vals[0];
         } else {
@@ -317,7 +317,7 @@ if (!function_exists('paint_form')) {
             if (!isset($_SESSION['href']))
                 $_SESSION['href']
                     = addslashes(htmlspecialchars(
-                        $_SERVER['HTTP_REFERER'],
+                        $_SERVER['HTTP_REFERER'] ?? '',
                         ENT_QUOTES)
                     );
         } else {
@@ -345,7 +345,7 @@ if (!function_exists('paint_form')) {
             if ($date_format) $jscal_ifformat = $date_format;
         }
 
-        $sActionAttr = htmlspecialchars(strip_tags($_SERVER['SCRIPT_NAME']));
+        $sActionAttr = htmlspecialchars(strip_tags($_SERVER['SCRIPT_NAME'] ?? ''));
         if($sActionAttr == "") $sActionAttr = $wb->page_link($wb->page['link']);
 
         $sValueAttr  = $_SESSION['submission_id_'.$iSID];
@@ -456,13 +456,13 @@ if (!function_exists('paint_form')) {
                 $aReplacements['{TEMPLATE}'] = $field['template'];
                 $aReplacements['{TEMPLATE0}']
                     = preg_replace(array("/\n/","/\r/"),'',$field['template']);
-                $tmp_tpl = explode("\n", $field['template']);
+                $tmp_tpl = explode("\n", $field['template'] ?? '');
                 for($tpl_idx = 1; $tpl_idx < 10; $tpl_idx++){
                     $aReplacements['{TEMPLATE'.$tpl_idx.'}'] = "";
                 }
                 $tpl_idx=1;
                 foreach ($tmp_tpl as $curr_idx){
-                    $aReplacements['{TEMPLATE'.$tpl_idx.'}'] = trim($curr_idx);
+                    $aReplacements['{TEMPLATE'.$tpl_idx.'}'] = trim($curr_idx ?? '');
                     $tpl_idx++;
                 }
 
@@ -642,7 +642,7 @@ if (!function_exists('paint_form')) {
                     break;
 
                     case 'textarea':
-                        $cr = explode(",", $field['extra']);
+                        $cr = explode(",", $field['extra'] ?? '');
                         if (isset($cr[0]) and is_numeric($cr[0])) {
                             $cols = $cr[0];
                         } else {
@@ -678,7 +678,7 @@ if (!function_exists('paint_form')) {
                     break;
 
                     case 'select':
-                        $options = explode(',', $value);
+                        $options = explode(',', $value ?? '');
                         foreach ($options as $idx => $option){
                             make_option(
                                 $option,
@@ -693,7 +693,7 @@ if (!function_exists('paint_form')) {
                             );
                             $options[$idx]=$option;
                         }
-                        $field['extra'] = explode(',',$field['extra']);
+                        $field['extra'] = explode(',',$field['extra'] ?? '');
                         $extras = '';
                         if (is_numeric($field['extra'][0])) {
                             $extras .=  'size="' .$field['extra'][0]. '" ';
@@ -717,9 +717,9 @@ if (!function_exists('paint_form')) {
                         array_push($options, $LANG['frontend']['select']);
                         $emails = preg_split('/[\r\n]/', $email_to);
                         foreach ($emails as $recip) {
-                            $teil = explode("<", $recip);
-                            if (trim($teil[0])!='')
-                            array_push($options, htmlspecialchars($teil[0], ENT_QUOTES));
+                            $teil = explode("<", $recip ?? '');
+                            if (trim($teil[0] ?? '')!='')
+                            array_push($options, htmlspecialchars($teil[0] ?? '', ENT_QUOTES));
                         }
                         foreach ($options as $idx => $option){
                             make_option(
@@ -788,7 +788,7 @@ if (!function_exists('paint_form')) {
                     break;
 
                     case 'checkbox':
-                        $options = explode(',', $value);
+                        $options = explode(',', $value ?? '');
                         $mpform_code = $enum_start;
                         if(count($options)>1) $readonly="";
                         foreach ($options as $idx => $option){
@@ -819,7 +819,7 @@ if (!function_exists('paint_form')) {
                     break;
 
                     case 'radio':
-                        $options = explode(',', $value);
+                        $options = explode(',', $value ?? '');
                         $mpform_code = $enum_start;
                         foreach ($options as $idx => $option){
                             make_radio(

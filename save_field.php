@@ -6,9 +6,9 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.40
+ * @version             1.3.42
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2021 Martin Hecht (mrbaseman)
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
@@ -26,7 +26,6 @@ $mod_dir = basename(dirname(__FILE__));
 
 // include the module language file depending on the backend language of the current user
 if (!@include(get_module_language_file($mod_dir))) return;
-
 
 // Get id
 if((!isset($_POST['field_id']) OR !is_numeric($_POST['field_id']))
@@ -111,7 +110,7 @@ if($admin->get_post('title') == '' OR $admin->get_post('type') == '') {
         $required = intval($required) | 4;
     }
     $help = str_replace(array("[[", "]]"), '',
-        htmlspecialchars($admin->get_post_escaped('help'), ENT_QUOTES));
+        htmlspecialchars($admin->get_post_escaped('help') ?? '', ENT_QUOTES));
 }
 
 // is this a new field or an attack?
@@ -233,7 +232,7 @@ if ($admin->get_post('type') == 'textfield'
   or $admin->get_post('type') == 'decimal_number') {
     $length = int_not0($admin->get_post_escaped('length'));
     $value = str_replace(array("[[", "]]"), '',
-        htmlspecialchars($admin->get_post_escaped('value'), ENT_QUOTES));
+        htmlspecialchars($admin->get_post_escaped('value') ?? '', ENT_QUOTES));
     $database->query(
         "UPDATE ".TP_MPFORM."fields"
             . " SET value = '$value',"
@@ -292,11 +291,11 @@ if ($admin->get_post('type') == 'textfield'
                 . 'EventHandler_fid'
                 . $iFID
                 . ");\n";
-            $options = explode(',', $value);
+            $options = explode(',', $value ?? '');
             foreach ($options as $idx => $option){
                 $def = strpos($option, MPFORM_IS_DEFAULT);
                 ($def > 0) ? $h = substr($option, 0, $def) : $h = $option;
-                $vals=explode($value_option_separator,$h);
+                $vals=explode($value_option_separator,$h ?? '');
                 if(count($vals)==1) $vals[1]=$vals[0];
                 if (!(substr($option, 0, 2) == '[=') && ($option != ']')){
                     $label_i = urlencode($option) . $iFID;
@@ -328,11 +327,11 @@ if ($admin->get_post('type') == 'textfield'
 
         } elseif (($field['type'] == 'checkbox')
                or ($field['type'] == 'radio')){
-            $options = explode(',', $value);
+            $options = explode(',', $value ?? '');
             foreach ($options as $idx => $option){
                 $def = strpos($option, MPFORM_IS_DEFAULT);
                 ($def > 0) ? $h = substr($option, 0, $def) : $h = $option;
-                $vals=explode($value_option_separator,$h);
+                $vals=explode($value_option_separator,$h ?? '');
                 $v = $vals[0];
                 if(count($vals)==1) $vals[1]=$vals[0];
                 $label_i = urlencode($option) . $iFID;
@@ -417,7 +416,7 @@ if ($admin->get_post('type') == 'textfield'
 
 } elseif ($admin->get_post('type') == 'textarea') {
     $value = str_replace(array("[[", "]]"), '',
-        htmlspecialchars($admin->get_post_escaped('value'), ENT_QUOTES));
+        htmlspecialchars($admin->get_post_escaped('value') ?? '', ENT_QUOTES));
     $width = int_not0($admin->get_post_escaped('width'));
     $rows  = int_not0($admin->get_post_escaped('rows'));
     $database->query(
@@ -432,7 +431,7 @@ if ($admin->get_post('type') == 'textfield'
           array("[[", "]]"),
            '',
            htmlspecialchars(
-               $admin->get_post_escaped('value'),
+               $admin->get_post_escaped('value') ?? '',
                ENT_QUOTES
            )
     );
@@ -447,7 +446,7 @@ if ($admin->get_post('type') == 'textfield'
             . " WHERE field_id = '$field_id'");
 } elseif ($admin->get_post('type') == 'heading') {
     $extra = str_replace(array("[[", "]]"), '', $admin->get_post_escaped('template'));
-    if(trim($extra) == ''){
+    if(trim($extra ?? '') == ''){
         $extra = '{TITLE}{FIELD}';
         if($bTableLayout)
            $extra = '<tr><td class="mpform_heading" colspan="3">'.$extra.'</td></tr>';
@@ -493,7 +492,7 @@ if ($admin->get_post('type') == 'textfield'
         = str_replace(array("[[", "]]"),
             '',
             htmlspecialchars(
-                $admin->get_post_escaped('value'), ENT_QUOTES
+                $admin->get_post_escaped('value') ?? '', ENT_QUOTES
             )
         );
     $database->query(
