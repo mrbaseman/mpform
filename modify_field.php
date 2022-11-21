@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.42
+ * @version             1.3.43
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -418,7 +418,7 @@ if($type == 'select') {
 }
 if($type == 'checkbox' OR $type == 'radio') {
     $fieldtypeoption .= "<tr>\n<th>". $TEXT['SEPERATOR'] .":</th>\n";
-    $fieldtypeoption .= '<td><input type="text" name="seperator" value="'. $form['extra']
+    $fieldtypeoption .= '<td><input type="text" name="separator" value="'. $form['extra']
         .'" style="width: 98%;" />'."</td>\n</tr>\n";
 }
 

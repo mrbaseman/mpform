@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.42
+ * @version             1.3.43
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -94,9 +94,9 @@ $upload_dir_mask = STRING_DIR_MODE;
 $upload_only_exts = "jpg,gif,png,tif,bmp,pdf";
 if(extension_loaded('gd') AND function_exists('imageCreateFromJpeg')) {
     /* Make's sure GD library is installed */
-    $use_captcha = true;
+    $use_captcha = 1;
 } else {
-    $use_captcha = false;
+    $use_captcha = 0;
 }
 
 $SQL = "INSERT INTO `".TP_MPFORM."settings`"

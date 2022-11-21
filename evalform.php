@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.42
+ * @version             1.3.43
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -104,8 +104,12 @@ if (!function_exists('NewWbMailer')) {
                 // for WBCE > 1.3.3
                 return new Mailer();
         }
+        if(class_exists('\wbmailer', true)) {
+                // for WB >= 2.13.1
+                return new \wbmailer();
+        }
         if(class_exists('App\WBMailer', true)) {
-                // for WB > 2.13.2
+                // for WB >> 2.13.2 ?
                 return new App\WBMailer();
         }
         if (!class_exists('WbMailer', false)) {
@@ -453,8 +457,9 @@ if (!function_exists('eval_form')) {
         }
 
         // get authenticated user data
-        if(isset($admin) AND $admin->is_authenticated() AND $admin->get_user_id() > 0) {
-            $submitted_by = $admin->get_user_id();
+        if(isset($admin) AND $admin->is_authenticated()
+        AND (method_exists($admin,'getUserId')?$admin->getUserId():$admin->get_user_id()) > 0) {
+            $submitted_by = (method_exists($admin,'getUserId')?$admin->getUserId():$admin->get_user_id());
             $wb_user = $admin->get_display_name();
             $wb_email = $admin->get_email();
         } else {

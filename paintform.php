@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.42
+ * @version             1.3.43
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -72,7 +72,7 @@ if (!function_exists('make_checkbox')) {
         $idx,
         &$mpform_code,
         $field_id,
-        $seperator,
+        $separator,
         $value,
         $sErrClass,
         $isnew,
@@ -107,7 +107,7 @@ if (!function_exists('make_checkbox')) {
                . '<label for="'.$label_id.'"'
                . 'class="'.$sErrClass.'checkbox_label">'
                . $vals[1]
-               . '</label>'.$seperator.PHP_EOL;
+               . '</label>'.$separator.PHP_EOL;
         } else {
             $option = '<input '
             . ' class="'.$sErrClass.'checkbox"'
@@ -119,7 +119,7 @@ if (!function_exists('make_checkbox')) {
             . '<label for="'.$label_id.'"'
             . ' class="'.$sErrClass.'checkbox_label">'
             . $vals[1]
-            . '</label>'.$seperator.PHP_EOL;
+            . '</label>'.$separator.PHP_EOL;
         }
     }
 }
@@ -131,7 +131,7 @@ if (!function_exists('make_radio')) {
         $idx,
         &$mpform_code,
         $field_id,
-        $seperator,
+        $separator,
         $value,
         $sErrClass,
         $isnew,
@@ -166,7 +166,7 @@ if (!function_exists('make_radio')) {
             . ' for="'.$label_id.'"'
             . ' class="'.$sErrClass.'radio_label">'
             . $vals[1]
-            . '</label>'.$seperator.PHP_EOL;
+            . '</label>'.$separator.PHP_EOL;
         } else {
             $option = '<input'
             . ' class="'.$sErrClass.'radio"'
@@ -179,7 +179,7 @@ if (!function_exists('make_radio')) {
             . ' for="'.$label_id.'" '
             . 'class="'.$sErrClass.'radio_label">'
             .  $vals[1]
-            . '</label>'.$seperator.PHP_EOL;
+            . '</label>'.$separator.PHP_EOL;
         }
     }
 }

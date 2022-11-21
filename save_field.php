@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.42
+ * @version             1.3.43
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -445,7 +445,7 @@ if ($admin->get_post('type') == 'textfield'
             . " extra = '$extra'"
             . " WHERE field_id = '$field_id'");
 } elseif ($admin->get_post('type') == 'heading') {
-    $extra = str_replace(array("[[", "]]"), '', $admin->get_post_escaped('template'));
+    $extra = str_replace(array("[[", "]]"), '', $admin->get_post_escaped('template') ?? '');
     if(trim($extra ?? '') == ''){
         $extra = '{TITLE}{FIELD}';
         if($bTableLayout)
@@ -477,7 +477,7 @@ if ($admin->get_post('type') == 'textfield'
         = str_replace(
            array("[[", "]]"),
            '',
-           $admin->get_post_escaped('seperator')
+           $admin->get_post_escaped('separator') ?? ''
         );
     if ($extra=="" and $isnewfield) $extra = "<br />";   // set default value
     $database->query(
@@ -506,7 +506,7 @@ if ($admin->get_post('type') == 'textfield'
         = str_replace(
             array("[[", "]]"),
             '',
-            $admin->get_post_escaped('seperator')
+            $admin->get_post_escaped('separator') ?? ''
         );
     if ($extra=="" and $isnewfield) $extra = "<br />";   // set default value
     $database->query(
