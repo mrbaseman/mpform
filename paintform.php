@@ -176,7 +176,6 @@ if (!function_exists('new_submission_id')) {
     function new_submission_id() {
         $sSubmissionID = '';
         $sSalt = "abchefghjkmnpqrstuvwxyz0123456789";
-        srand((double)microtime()*1000000);
         $i = 0;
         while ($i <= 7) {
             $num = rand() % 33;
