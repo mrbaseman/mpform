@@ -27,7 +27,7 @@ require_once(WB_PATH.'/framework/functions.php');
 
 #require_once(dirname(__FILE__) . '/info.php');
 
-$set_field = explode ( "-",$_POST['id']);
+$set_field = explode ( "-",$_POST['id'] ?? '');
 $page_field = $set_field[0];
 $field_id = $set_field[1];
 

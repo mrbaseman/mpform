@@ -6,10 +6,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.44
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -96,7 +96,7 @@ $settings = $sql_result->fetchRow();
 if($settings['value_option_separator']=="")
     $settings['value_option_separator']=MPFORM_DEFAULT_OPT_SEPARATOR; // fallback
 $settings['value_option_separator']=
-    htmlspecialchars($settings['value_option_separator'],ENT_QUOTES);
+    htmlspecialchars($settings['value_option_separator'] ?? '',ENT_QUOTES);
 
 // replace all placeholder {xxx} of the template file with values from the db
 foreach($settings as $key => $value) {

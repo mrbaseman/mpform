@@ -6,10 +6,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.44
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -66,14 +66,14 @@ $success_text
     . '<br />'
     . '</div>';
 $submissions_text = '{DATA}'."\n"
-    . 'Referer page: {REFERER}'."\n"
-    . 'IP address: {IP}'."\n"
+//    . 'Referer page: {REFERER}'."\n"
+//    . 'IP address: {IP}'."\n"
     . 'Date: {DATE}';
 $email_text = 'The following data was submitted:<br />{DATA}'
     . '<br />'
     . 'Referer page: {REFERER}'
-    . '<br />'
-    . 'IP address: {IP}';
+    . '<br />';
+//    . 'IP address: {IP}';
 $email_css = '';
 $success_email_to = '';
 $success_email_from = 'SERVER_EMAIL';
@@ -94,9 +94,9 @@ $upload_dir_mask = STRING_DIR_MODE;
 $upload_only_exts = "jpg,gif,png,tif,bmp,pdf";
 if(extension_loaded('gd') AND function_exists('imageCreateFromJpeg')) {
     /* Make's sure GD library is installed */
-    $use_captcha = true;
+    $use_captcha = 1;
 } else {
-    $use_captcha = false;
+    $use_captcha = 0;
 }
 
 $SQL = "INSERT INTO `".TP_MPFORM."settings`"

@@ -136,6 +136,11 @@ div.mpform div.submitbox input {
     color: black;
 }
 
+.mpform_help {
+    max-width: 16px !important;
+    max-height: 16px !important;
+}
+
 .mpform_error .mpform_title,
 .mpform_error .mpform_field,
 .captcha_err  .mpform_title,

@@ -7,10 +7,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.44
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -29,6 +29,7 @@ $LANG = array();
 $LANG['backend'] = array(
     'SETTINGS'                    => 'Formulierinstellingen',
     'TXT_TYP'                     => 'Type',
+    'TXT_ALL'                     => "Alle",
     'TXT_LIST'                    => "Lijst",
     'TXT_DEFAULT'                 => "Standaardwaarde",
     'TXT_ISFOLLOWING'             => "Heeft een voorgaand formulier",

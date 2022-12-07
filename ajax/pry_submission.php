@@ -6,10 +6,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.44
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -84,9 +84,9 @@ if($get_user->numRows() != 0) {
         <tr>
             <td colspan="2">
                 <?php
-                    $lines = explode("\n",$submission['body']);
+                    $lines = explode("\n",$submission['body'] ?? '');
                     foreach($lines as $k => $v) {
-                        $hr = explode('url]',$v);
+                        $hr = explode('url]',$v ?? '');
                         if (count($hr)>1) {
                             $hr[0] = substr($hr[0],0,-1);
                             $hr[1] = substr($hr[1],0,-2);

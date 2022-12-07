@@ -6,10 +6,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.44
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -186,7 +186,7 @@ switch ($type) {
         ."</tr>\n";
         break;
     case 'textarea':
-        $cr = explode(',', $form['extra']);
+        $cr = explode(',', $form['extra'] ?? '');
         if (isset($cr[0]) and is_numeric($cr[0])) {
             $cols = $cr[0];
         } else {
@@ -315,7 +315,7 @@ switch ($type) {
 
         $option_count = 0;
         $imgurl = THEME_URL . '/images/';
-        $list = explode(',', $form['value']);
+        $list = explode(',', $form['value'] ?? '');
         foreach($list AS $option_value) {
             $def = strpos($option_value, MPFORM_IS_DEFAULT);
             if ($def > 0) {
@@ -325,7 +325,7 @@ switch ($type) {
                 $ovalue = $option_value;
                 $cv = "";
             }
-            $ovalue=htmlspecialchars(str_replace('&#44;', ',', $ovalue), ENT_QUOTES);
+            $ovalue=htmlspecialchars(str_replace('&#44;', ',', $ovalue ?? ''), ENT_QUOTES);
             $option_count = $option_count+1;
             ($type == 'radio') ? $isdef = "isdefault" : $isdef = "isdefault$option_count";
             $fieldtypeoption .= '<table cellpadding="3" cellspacing="0" width="100%" border="0">'
@@ -397,9 +397,9 @@ switch ($type) {
 
 // second round:
 if($type == 'select') {
-    $form['extra'] = explode(',',$form['extra']);
+    $form['extra'] = explode(',',$form['extra'] ?? '');
     $fieldtypeoption .= "<tr>\n<th>". $TEXT['SIZE'] .":</th>\n";
-    $fieldtypeoption .= '<td><input type="text" name="size" value="'. trim($form['extra'][0])
+    $fieldtypeoption .= '<td><input type="text" name="size" value="'. trim($form['extra'][0] ?? '')
         .'" style="width: 98%;" maxlength="3" /></td>';
     $fieldtypeoption .= "\n</tr>\n<tr>\n";
     $fieldtypeoption .= "<th>". $TEXT['ALLOW_MULTIPLE_SELECTIONS'] .":</th>\n";
@@ -418,7 +418,7 @@ if($type == 'select') {
 }
 if($type == 'checkbox' OR $type == 'radio') {
     $fieldtypeoption .= "<tr>\n<th>". $TEXT['SEPERATOR'] .":</th>\n";
-    $fieldtypeoption .= '<td><input type="text" name="seperator" value="'. $form['extra']
+    $fieldtypeoption .= '<td><input type="text" name="separator" value="'. $form['extra']
         .'" style="width: 98%;" />'."</td>\n</tr>\n";
 }
 

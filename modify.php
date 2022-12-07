@@ -6,10 +6,10 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.36
+ * @version             1.3.44
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
- * @copyright           (c) 2009 - 2020, Website Baker Org. e.V.
- * @url                 https://github.com/WebsiteBaker-modules/mpform
+ * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
+ * @url                 https://github.com/mrbaseman/mpform
  * @license             GNU General Public License
  * @platform            2.8.x
  * @requirements        php >= 5.3
@@ -75,6 +75,7 @@ $tpl->set_var(
         'TEXT_HEADING_S'     => $TEXT['SUBMISSIONS'],
         'TEXT_DELETE'        => $TEXT['DELETE'],
         'TEXT_ARE_YOU_SURE'  => str_replace(' ', '%20', $TEXT['ARE_YOU_SURE']),
+        'TXT_ARE_YOU_SURE'   => $TEXT['ARE_YOU_SURE'],
         'TEXT_FIELD'         => $TEXT['FIELD'],
         'TEXT_MOVE_UP'       => $TEXT['MOVE_UP'],
         'TEXT_MOVE_DOWN'     => $TEXT['MOVE_DOWN'],
@@ -87,6 +88,7 @@ $tpl->set_var(
         'TXT_HEADING'        => $module_name,
         'MODULE_DIR'         => $mod_dir,
         'MOD_CANCEL_URL'     => ADMIN_URL,
+        'TXT_ALL'            => $LANG['backend']['TXT_ALL'],
         'TEXT_TYPE'          => $LANG['backend']['TXT_TYP'],
         'TXT_ADV_SETTINGS'   => $LANG['backend_adv']['adv_settings'],
         'TXT_FIELDS'         => $LANG['backend']['TXT_ADD_FIELD'],
@@ -180,7 +182,7 @@ if($num_fields > 0) {
         }
         $multiselect_field='';
         if ($field['type'] == 'select') {
-            $field['extra'] = explode(',',$field['extra']);
+            $field['extra'] = explode(',',$field['extra'] ?? '');
             $multiselect_txt = $TEXT['MULTISELECT'] .': '
                 .(($field['extra'][1] == 'multiple') ? $TEXT['YES'] : $TEXT['NO']);
             $multiselect_img = WB_URL.'/modules/'.$mod_dir.'/images/'
@@ -255,6 +257,20 @@ if($query_submissions->numRows() > 0) {
     $pos = 0;
     while($submission = $query_submissions->fetchRow()) {
         $pos++;
+
+        // Get the user details of whoever did this submission
+        $query_user
+            = "SELECT username,display_name"
+               . " FROM `".TABLE_PREFIX."users`"
+               . " WHERE `user_id` = '".$submission['submitted_by']."'";
+        $get_user = $database->query($query_user);
+        if($get_user->numRows() != 0) {
+            $user = $get_user->fetchRow();
+        } else {
+            $user['display_name'] = 'Unknown';
+            $user['username'] = 'unknown';
+        }
+
         $tpl->set_var(
             array(
                 'SUBMISSION_ID'          => (method_exists( $admin, 'getIDKEY' )
@@ -269,7 +285,10 @@ if($query_submissions->numRows() > 0) {
                                             ? $admin->getIDKEY($submission['submission_id'])
                                             : $submission['submission_id'],
                 'field_submission_when'  => date(TIME_FORMAT.', '.DATE_FORMAT,
-                                                 $submission['submitted_when']-DEFAULT_TIMEZONE+TIMEZONE),
+                                                 $submission['submitted_when']-DEFAULT_TIMEZONE+TIMEZONE)
+                                                . " " . $TEXT['FROM'] . " "
+                                                . $user['display_name'] . ' (' . $user['username'] . ')'
+
             )
         );
         $tpl->parse('submission_loop', 'submission_block', true);
