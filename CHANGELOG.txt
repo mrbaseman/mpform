@@ -5,6 +5,9 @@ MODULE VERSION HISTORY
 ======================
 
 ------------------------------------------------------------------------------------------------------------------------
+        *** 1.3.44 (Martin Hecht: 7-Dec-2022)
+        drop support for php 4 random number generator
+
         *** 1.3.43 (Martin Hecht: 21-Nov-2022)
         support wb 2.13.2 - WB has renamed get_user_id (fixed typo here)
         set use_captcha as int instead of bool - consistence with sql structure

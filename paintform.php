@@ -6,7 +6,7 @@
  *
  * @category            page
  * @module              mpform
- * @version             1.3.43
+ * @version             1.3.44
  * @authors             Frank Heyne, NorHei(heimsath.org), Christian M. Stefan (Stefek), Martin Hecht (mrbaseman) and others
  * @copyright           (c) 2009-2013 Frank Heyne, Stefek, Norhei, 2014-2022 Martin Hecht (mrbaseman)
  * @url                 https://github.com/mrbaseman/mpform
@@ -189,7 +189,7 @@ if (!function_exists('new_submission_id')) {
     function new_submission_id() {
         $sSubmissionID = '';
         $sSalt = "abchefghjkmnpqrstuvwxyz0123456789";
-        srand((double)microtime()*1000000);
+        //srand((double)microtime()*1000000);  // not needed anymore
         $i = 0;
         while ($i <= 7) {
             $num = rand() % 33;
