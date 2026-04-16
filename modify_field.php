@@ -494,9 +494,9 @@ if( $type != 'heading'
            preg_match('/{TEMPLATE/',$settings['uploadfile_html'])
           ){
             $fieldtypeoption .= "<tr>\n<th>". $LANG['backend']['txt_extraclasses'] .":</th>\n";
-            $fieldtypeoption .= '<td><textfield name="extraclasses" maxlength="250"'
+            $fieldtypeoption .= '<td><textarea name="extraclasses" maxlength="250"'
                 .' style="width: 98%;">'
-                . $form['extraclasses'] ."</textfield><br />"
+                . $form['extraclasses'] ."</textarea><br />"
                 . "<small>".$LANG['backend']['des_extraclasses']."</small></td>\n</tr>\n";
         }
         if(preg_match('/{TEMPLATE/',$settings['field_loop'])){
