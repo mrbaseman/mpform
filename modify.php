@@ -147,7 +147,7 @@ if($num_fields > 0) {
             case 'filename':
                 $rt = $TEXT['UPLOAD_FILES'];
             break;
-            case 'date';
+            case 'date':
                 $rt = $TEXT['DATE'];
             break;
             case 'email':

@@ -213,8 +213,8 @@ if(is_numeric($list_count)) {
             $values[] = preg_replace("/&amp;(#?[a-zA-Z0-9]+);/","&\\1;",
                 str_replace(array(",", "[[", "]]"),
                     array("&#44;", '', ''),
-                    htmlspecialchars($admin->add_slashes(
-                        $admin->get_post('value'.$i)),
+                    htmlspecialchars(
+                        $admin->get_post('value'.$i),
                         ENT_QUOTES)
                     )
                 ) . $defcode;
