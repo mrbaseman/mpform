@@ -538,13 +538,22 @@ if (!function_exists('eval_form')) {
                                 );
                         } else {
                             // make sure user does see what he entered:
+                            $session_val = htmlspecialchars(
+                                stripslashes($post_field) ?? '', ENT_QUOTES);
+                            // protect @ and . from output filter obfuscation in email fields
+                            if($field['type'] == 'email') {
+                                $session_val = str_replace(
+                                    array('@', '.'),
+                                    array('&#64;', '&#46;'),
+                                    $session_val
+                                );
+                            }
                             $_SESSION['mpf']['field'.$field_id]
                                 = str_replace(
                                     array("[[", "]]"),
                                     array("&#91;&#91;", "&#93;&#93;"),
-                                    htmlspecialchars(
-                                        stripslashes($post_field) ?? '', ENT_QUOTES)
-                                    );
+                                    $session_val
+                                );
                         }
 
                         // no injections, please
@@ -763,7 +772,7 @@ if (!function_exists('eval_form')) {
                                         array("[[", "]]"),
                                         array("&#91;&#91;", "&#93;&#93;"),
                                         htmlspecialchars(
-                                            $admin->add_slashes($v) ?? '', ENT_QUOTES
+                                            $v ?? '', ENT_QUOTES
                                         )
                                     );
                                 $curr_field .= mpform_escape_string($field_value) . ", ";
